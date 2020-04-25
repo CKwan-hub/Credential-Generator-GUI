@@ -1,3 +1,18 @@
+# TODO:
+#
+# -Wire up functionality
+#   -toggle output to .txt
+#   -toggle switch for length
+#   -Fade/disable field input until URL checkbox active.
+#   -Warning message toggle on/off for realistic password
+#   -Bind/command for all other functionality.
+# -Pull realistic password generator from github - Credential Generator
+#   -(Chance to pick seed word instead of char string.
+#       If char string, append rand 1-4 amt of num and 1-2 rand symbol)
+# -Descriptions for line
+# -Padding, spacing, formatting
+
+
 # Importing
 import tkinter
 from tkinter import ttk
@@ -56,6 +71,8 @@ tkinter.Entry(window).grid(row=5, column=1)
 
 tkinter.Label(window, text="Password Value").grid(row=6)
 tkinter.Entry(window).grid(row=6, column=1)
+
+# TODO: toggle display message on/off check.
 
 
 def showWarn():
