@@ -30,11 +30,6 @@ window.resizable(0, 0)
 # dropdownFont = ("Courier", 8)
 
 # label_widget = tk.Label(widget, option=placeholder)
-# Code to add widgets will go here...
-# checkbutton_widget = tk.CheckButton(widget, option=placeholder)
-# checkbutton_widget = tk.CheckButton(widget, option=placeholder)
-# checkbutton_widget = tk.CheckButton(widget, option=placeholder)
-# checkbutton_widget = tk.CheckButton(widget, option=placeholder)
 
 # label_widget = tk.Label(widget, option=placeholder)
 # checkbutton_widget = tk.CheckButton(widget, option=placeholder)
@@ -43,10 +38,26 @@ window.resizable(0, 0)
 # bottom_frame = tkinter.Frame(window).pack(side="bottom")
 # button_widget = tk.Button(widget, option=placeholder)
 
-tkinter.Checkbutton(
-    window, text="Output To File").grid(row=0, columnspan=2)
+outputText = tkinter.StringVar()
+tkinter.Label(
+    window, textvariable=outputText).grid(row=1, columnspan=2)
+outputText.set('')
 
-tkinter.Label(window, text="Generated List Size:").grid(row=1, columnspan=2)
+
+def outputCheck():
+    if (chkVal.get() == 1):
+        print('checked')
+        outputText.set('Data Generated In \"Output.txt\"')
+    if (chkVal.get() == 0):
+        print('unchecked')
+        outputText.set('')
+
+
+chkVal = tkinter.IntVar()
+tkinter.Checkbutton(
+    window, text="Output To File", variable=chkVal, onvalue=1, offvalue=0, command=outputCheck).grid(row=0, columnspan=2)
+
+tkinter.Label(window, text="Set Results Length").grid(row=2, columnspan=2)
 
 lengthOptions = tkinter.ttk.Combobox(window, values=[
     "Short (300)",
@@ -54,40 +65,50 @@ lengthOptions = tkinter.ttk.Combobox(window, values=[
     "Long (7,500)",
     "Very Long (100k)",
     "Million! (~1.1m)"
-], state="readonly").grid(row=2, columnspan=2)
+], state="readonly").grid(row=3, columnspan=2)
 # ^ before ".grid", add font if desired
 
 # Wire up function on length selection.
 # lengthOptions.bind("<<ComboboxSelected>>", lengthSelection)
 
+
+def enableEntry():
+    if (chkVal2.get() == 1):
+        print('checked')
+
+    if (chkVal2.get() == 0):
+        print('unchecked')
+
+
+chkVal2 = tkinter.IntVar()
 tkinter.Checkbutton(
-    window, text="Send to URL").grid(row=3, columnspan=2)
+    window, text="Send to URL", command=enableEntry, variable=chkVal2, onvalue=1, offvalue=0).grid(row=4, columnspan=2)
 
-tkinter.Label(window, text="Target URL").grid(row=4)
-tkinter.Entry(window).grid(row=4, column=1)
-
-tkinter.Label(window, text="Email Value").grid(row=5)
+tkinter.Label(window, text="Target URL").grid(row=5)
 tkinter.Entry(window).grid(row=5, column=1)
 
-tkinter.Label(window, text="Password Value").grid(row=6)
+tkinter.Label(window, text="Email Value").grid(row=6)
 tkinter.Entry(window).grid(row=6, column=1)
+
+tkinter.Label(window, text="Password Value").grid(row=7)
+tkinter.Entry(window).grid(row=7, column=1)
 
 # TODO: toggle display message on/off check.
 
 
 def showWarn():
     tkinter.Label(window, text="Generating realistic passwords.").grid(
-        row=8, columnspan=2)
+        row=9, columnspan=2)
 
 
 # passwordComplex =
 tkinter.Checkbutton(
-    window, text="Enable Realistic Password", command=showWarn).grid(row=7, columnspan=2)
+    window, text="Enable Realistic Password", command=showWarn).grid(row=8, columnspan=2)
 
 
 # passwordComplex.bind()
 
-tkinter.Label(window, text="").grid(row=8, columnspan=2)
+tkinter.Label(window, text="").grid(row=9, columnspan=2)
 
 
 def runGenerator():
