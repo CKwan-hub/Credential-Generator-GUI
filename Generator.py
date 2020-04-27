@@ -72,26 +72,56 @@ lengthOptions = tkinter.ttk.Combobox(window, values=[
 # lengthOptions.bind("<<ComboboxSelected>>", lengthSelection)
 
 
+# urlLabel = tkinter.Label(window, text="Target URL").grid(row=5)
+# urlVar = tkinter.StringVar()
+# urlVar = 'disabled'
+# urlEntry = tkinter.Entry(window, state='disabled').grid(row=5, column=1)
+# print(urlEntry.window['state'])
+# tkinter.Entry(window, state=urlVar).grid(row=5, column=1)
+# print(urlVar)
+
+
 def enableEntry():
+    global urlLabel, urlEntry, emailLabel, emailEntry, passwordLabel, passwordEntry
+    # global urlEntry
+    # print(urlEntry)
+    # global urlVar
+    # print('global urlVar', urlVar)
     if (chkVal2.get() == 1):
         print('checked')
-
+        urlLabel = tkinter.Label(window, text="Target URL")
+        urlLabel.grid(row=5)
+        urlEntry = tkinter.Entry(window,)
+        urlEntry.grid(row=5, column=1)
+        emailLabel = tkinter.Label(window, text="Email Value")
+        emailLabel.grid(row=6)
+        emailEntry = tkinter.Entry(window)
+        emailEntry.grid(row=6, column=1)
+        passwordLabel = tkinter.Label(
+            window, text="Password Value")
+        passwordLabel.grid(row=7)
+        passwordEntry = tkinter.Entry(window)
+        passwordEntry.grid(row=7, column=1)
+        # urlEntry['state'] = tkinter.NORMAL
+        # urlVar = 'normal'
+        # print(urlVar)
     if (chkVal2.get() == 0):
         print('unchecked')
+        urlLabel.grid_remove()
+        urlEntry.grid_remove()
+        emailLabel.grid_remove()
+        emailEntry.grid_remove()
+        passwordLabel.grid_remove()
+        passwordEntry.grid_remove()
+
+        # urlVar = 'disabled'
+        # print(urlVar)
 
 
 chkVal2 = tkinter.IntVar()
 tkinter.Checkbutton(
     window, text="Send to URL", command=enableEntry, variable=chkVal2, onvalue=1, offvalue=0).grid(row=4, columnspan=2)
 
-tkinter.Label(window, text="Target URL").grid(row=5)
-tkinter.Entry(window).grid(row=5, column=1)
-
-tkinter.Label(window, text="Email Value").grid(row=6)
-tkinter.Entry(window).grid(row=6, column=1)
-
-tkinter.Label(window, text="Password Value").grid(row=7)
-tkinter.Entry(window).grid(row=7, column=1)
 
 # TODO: toggle display message on/off check.
 
