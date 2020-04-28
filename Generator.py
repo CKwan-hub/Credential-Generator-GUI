@@ -123,22 +123,28 @@ tkinter.Checkbutton(
     window, text="Send to URL", command=enableEntry, variable=chkVal2, onvalue=1, offvalue=0).grid(row=4, columnspan=2)
 
 
-# TODO: toggle display message on/off check.
+chkShow = tkinter.IntVar()
+passwordText = tkinter.StringVar()
+passwordText.set("")
 
 
 def showWarn():
-    tkinter.Label(window, text="Generating realistic passwords.").grid(
-        row=9, columnspan=2)
+    if (chkShow.get() == 1):
+        print('checked')
+        passwordText.set("Generating realistic passwords.")
+    if (chkShow.get() == 0):
+        print('unchecked')
+        passwordText.set("")
 
 
 # passwordComplex =
 tkinter.Checkbutton(
-    window, text="Enable Realistic Password", command=showWarn).grid(row=8, columnspan=2)
+    window, text="Enable Realistic Password", command=showWarn, variable=chkShow, onvalue=1, offvalue=0).grid(row=8, columnspan=2)
 
 
 # passwordComplex.bind()
 
-tkinter.Label(window, text="").grid(row=9, columnspan=2)
+tkinter.Label(window, textvariable=passwordText).grid(row=9, columnspan=2)
 
 
 def runGenerator():
