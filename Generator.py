@@ -30,13 +30,8 @@ window.resizable(0, 0)
 # dropdownFont = ("Courier", 8)
 
 # label_widget = tk.Label(widget, option=placeholder)
-
-# label_widget = tk.Label(widget, option=placeholder)
 # checkbutton_widget = tk.CheckButton(widget, option=placeholder)
 
-# top_frame = tkinter.Frame(window).pack()
-# bottom_frame = tkinter.Frame(window).pack(side="bottom")
-# button_widget = tk.Button(widget, option=placeholder)
 
 outputText = tkinter.StringVar()
 tkinter.Label(
@@ -72,21 +67,8 @@ lengthOptions = tkinter.ttk.Combobox(window, values=[
 # lengthOptions.bind("<<ComboboxSelected>>", lengthSelection)
 
 
-# urlLabel = tkinter.Label(window, text="Target URL").grid(row=5)
-# urlVar = tkinter.StringVar()
-# urlVar = 'disabled'
-# urlEntry = tkinter.Entry(window, state='disabled').grid(row=5, column=1)
-# print(urlEntry.window['state'])
-# tkinter.Entry(window, state=urlVar).grid(row=5, column=1)
-# print(urlVar)
-
-
 def enableEntry():
     global urlLabel, urlEntry, emailLabel, emailEntry, passwordLabel, passwordEntry
-    # global urlEntry
-    # print(urlEntry)
-    # global urlVar
-    # print('global urlVar', urlVar)
     if (chkVal2.get() == 1):
         print('checked')
         urlLabel = tkinter.Label(window, text="Target URL")
@@ -102,9 +84,6 @@ def enableEntry():
         passwordLabel.grid(row=7)
         passwordEntry = tkinter.Entry(window)
         passwordEntry.grid(row=7, column=1)
-        # urlEntry['state'] = tkinter.NORMAL
-        # urlVar = 'normal'
-        # print(urlVar)
     if (chkVal2.get() == 0):
         print('unchecked')
         urlLabel.grid_remove()
@@ -113,9 +92,6 @@ def enableEntry():
         emailEntry.grid_remove()
         passwordLabel.grid_remove()
         passwordEntry.grid_remove()
-
-        # urlVar = 'disabled'
-        # print(urlVar)
 
 
 chkVal2 = tkinter.IntVar()
@@ -141,8 +117,6 @@ def showWarn():
 tkinter.Checkbutton(
     window, text="Enable Realistic Password", command=showWarn, variable=chkShow, onvalue=1, offvalue=0).grid(row=8, columnspan=2)
 
-
-# passwordComplex.bind()
 
 tkinter.Label(window, textvariable=passwordText).grid(row=9, columnspan=2)
 
