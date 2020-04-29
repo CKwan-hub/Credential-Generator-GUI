@@ -29,9 +29,80 @@ window.geometry('230x300')
 window.resizable(0, 0)
 # dropdownFont = ("Courier", 8)
 
+username = ''
+password = ''
+
+# string of ascii letters in both upppercase & lowercase + string of digits  + spec characters
+chars = string.ascii_letters + string.digits + '!?@#$%&*'
+
+# seed basis for random numbers
+random.seed = (os.urandom(1024))
+
+# choices for email suffix.
+email_list = ['@yahoo.com', '@gmail.com',
+              '@mail.com', '@outlook.com', '@aol.com']
+
+# choices for generated password length.
+password_length = [6, 7, 8, 9, 10, 11, 12]
+
+# choices for generated extra email numbers length.
+extra_length = [0, 1, 2, 3, 4]
+
+# url to which the data can be sent.
+# url = '#'
+
+# list of text to act as the email base value.
+email_text = json.loads(open('short_text.json').read())
+
+
+def mainFunction():
+    global username
+    global password
+
+    tkinter.Label(window, text="Generating UserData...").grid(
+        row=11, columnspan=2)
+    print('running main')
+
+    # def lengthSelection(event)
+    #
+
+    for email_data in email_text:
+
+        # additional values for randomly adding a second word to email.
+        name_random = ["", random.choice(email_text), ""]
+
+        # take a random amount of digits, at a random length between 0 and 4.
+        name_digits = ''.join(random.choice(string.digits)
+                              for i in range(random.choice(extra_length)))
+
+        # lowercase values from email_text + random digits + random choice of email suffix.
+        username = email_data.lower() + random.choice(name_random) + \
+            name_digits + random.choice(email_list)
+
+        # random selection of upper & lower case characters/digits/special characters at a length of 6-12.
+        password = ''.join(random.choice(chars)
+                           for i in range(random.choice(password_length)))
+
+        # Post to the specified url, don't redirect and pass usernames and passwords.
+        # !!Need to specify the var for username and password from submission form.
+        # requests.post(url, allow_redirects=False, data={
+        #     '#': username,
+        #     '#': password
+        # })
+
+        # Output list of usernames and passwords.
+        if (chkVal.get() == 1):
+            output_file.write('\"Username:\" \'% s\' \"Password:\" \'% s\' \n' %
+                              (username, password))
+        if (chkVal.get() == 0):
+            print('Username: %s Password: %s' % (username, password))
+
+
 # label_widget = tk.Label(widget, option=placeholder)
 # checkbutton_widget = tk.CheckButton(widget, option=placeholder)
 
+# open output.txt in append mode.
+output_file = open('output.txt', 'a')
 
 outputText = tkinter.StringVar()
 tkinter.Label(
@@ -40,21 +111,28 @@ outputText.set('')
 
 
 def outputCheck():
+    # global username
+    # global password
+    # global output
     if (chkVal.get() == 1):
         print('checked')
         outputText.set('Data Generated In \"Output.txt\"')
+        # # Output list of usernames and passwords.
+        # output = output_file.write('\"Username:\" \'% s\' \"Password:\" \'% s\' \n' %
+        #                            (username, password))
     if (chkVal.get() == 0):
         print('unchecked')
         outputText.set('')
+        # print('Username: %s Password: %s' % (username, password))
 
 
 chkVal = tkinter.IntVar()
-tkinter.Checkbutton(
+ttk.Checkbutton(
     window, text="Output To File", variable=chkVal, onvalue=1, offvalue=0, command=outputCheck).grid(row=0, columnspan=2)
 
 tkinter.Label(window, text="Set Results Length").grid(row=2, columnspan=2)
 
-lengthOptions = tkinter.ttk.Combobox(window, values=[
+lengthOptions = ttk.Combobox(window, values=[
     "Short (300)",
     "Medium (1,750)",
     "Long (7,500)",
@@ -95,7 +173,7 @@ def enableEntry():
 
 
 chkVal2 = tkinter.IntVar()
-tkinter.Checkbutton(
+ttk.Checkbutton(
     window, text="Send to URL", command=enableEntry, variable=chkVal2, onvalue=1, offvalue=0).grid(row=4, columnspan=2)
 
 
@@ -114,7 +192,7 @@ def showWarn():
 
 
 # passwordComplex =
-tkinter.Checkbutton(
+ttk.Checkbutton(
     window, text="Enable Realistic Password", command=showWarn, variable=chkShow, onvalue=1, offvalue=0).grid(row=8, columnspan=2)
 
 
@@ -122,70 +200,18 @@ tkinter.Label(window, textvariable=passwordText).grid(row=9, columnspan=2)
 
 
 def runGenerator():
+
     tkinter.Label(window, text="Generating UserData...").grid(
         row=11, columnspan=2)
+    print('running main')
 
 
-btn1 = tkinter.Button(window, text="Run",
-                      fg="red", command=runGenerator).grid(row=10, columnspan=2)
+btn1 = ttk.Button(window, text="Run",  command=mainFunction)
+btn1.grid(
+    row=10, columnspan=2)
+# btn1.bind(mainFunction)
 
 tkinter.Label(window).grid(row=11)
 
 
 window.mainloop()
-
-# def lengthSelection(event)
-#
-# string of ascii letters in both upppercase & lowercase + string of digits  + spec characters
-chars = string.ascii_letters + string.digits + '!?@#$%&*'
-
-# seed basis for random numbers
-random.seed = (os.urandom(1024))
-
-# choices for email suffix.
-email_list = ['@yahoo.com', '@gmail.com',
-              '@mail.com', '@outlook.com', '@aol.com']
-
-# choices for generated password length.
-password_length = [6, 7, 8, 9, 10, 11, 12]
-
-# choices for generated extra email numbers length.
-extra_length = [0, 1, 2, 3, 4]
-
-# url to which the data can be sent.
-# url = '#'
-
-# list of text to act as the email base value.
-email_text = json.loads(open('medium_text.json').read())
-
-# open output.txt in append mode.
-output_file = open('output.txt', 'a')
-
-for email_data in email_text:
-
-    # additional values for randomly adding a second word to email.
-    name_random = ["", random.choice(email_text), ""]
-
-    # take a random amount of digits, at a random length between 0 and 4.
-    name_digits = ''.join(random.choice(string.digits)
-                          for i in range(random.choice(extra_length)))
-
-    # lowercase values from email_text + random digits + random choice of email suffix.
-    username = email_data.lower() + random.choice(name_random) + \
-        name_digits + random.choice(email_list)
-
-    # random selection of upper & lower case characters/digits/special characters at a length of 6-12.
-    password = ''.join(random.choice(chars)
-                       for i in range(random.choice(password_length)))
-
-    # Post to the specified url, don't redirect and pass usernames and passwords.
-    # !!Need to specify the var for username and password from submission form.
-    # requests.post(url, allow_redirects=False, data={
-    #     '#': username,
-    #     '#': password
-    # })
-
-    # Output list of usernames and passwords.
-    # output_file.write('\"Username:\" \'% s\' \"Password:\" \'% s\' \n' %
-    #                   (username, password))
-    # print('Username: %s Password: %s' % (username, password))
