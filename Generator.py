@@ -1,17 +1,20 @@
-# TODO:
-#
-# -Wire up functionality
-#   -toggle output to .txt
-#   -toggle switch for length
-#   -Fade/disable field input until URL checkbox active.
-#   -Warning message toggle on/off for realistic password
-#   -Bind/command for all other functionality.
-# -Pull realistic password generator from github - Credential Generator
-#   -(Chance to pick seed word instead of char string.
-#       If char string, append rand 1-4 amt of num and 1-2 rand symbol)
-# -Descriptions for line
-# -Padding, spacing, formatting
 
+
+# TODO:
+# URL WORK
+# If URLchk = checked,
+# get values from fields, pass as values for vars in main function.
+#
+#  Output Length
+# switch statement (aka dictionary map) for the json files
+# make the .json file being read as seed a variable
+# if (combobox value) = X, email_text = X
+# (also, set a default setting)
+#
+# Strong vs Realistic password generation
+# In main repo, create a function with random selection
+# if hits "strong" vs the normal selection route,
+# do random.choice(word from seed), plus 1-4 num/symbol
 
 # Importing
 import tkinter
@@ -29,6 +32,7 @@ window.title("CredGen")
 window.geometry('400x255')
 window.resizable(0, 0)
 
+
 # Styling config.
 # style = ttk.Style(window)
 # style.configure('TLabel', background='black', foreground='red')
@@ -43,7 +47,7 @@ parentFrame.grid_columnconfigure((0, 1), weight=1)
 parentFrame.grid_propagate(0)
 window.grid_rowconfigure(0, weight=1)
 window.grid_columnconfigure(0, weight=1)
-# dropdownFont = ("Courier", 8)
+dropdownFont = ("tahoma", 8)
 
 # Instructions frame config
 secondFrame = tkinter.Frame(width=180, height=180,
@@ -63,6 +67,11 @@ runFrame.grid_columnconfigure((0, 1), weight=1)
 
 username = ''
 password = ''
+
+lengthOptionsArray = ['short_text.json', 'medium_text.json',
+                      'long_text.json', 'longest_text.json', 'million_text.json']
+
+print(lengthOptionsArray[1])
 
 # string of ascii letters in both upppercase & lowercase + string of digits  + spec characters
 chars = string.ascii_letters + string.digits + '!?@#$%&*'
@@ -92,7 +101,7 @@ def mainFunction():
     global password
 
     tkinter.Label(runFrame, text="Generating UserData...").grid(
-        row=1, columnspan=2)
+        row=1, columnspan=2, pady=2)
     print('running main')
 
     # def lengthSelection(event)
@@ -171,7 +180,7 @@ lengthOptions = ttk.Combobox(secondFrame, values=[
     "Long (7,500)",
     "Very Long (100k)",
     "Million! (~1.1m)"
-], state="readonly").grid(row=2, columnspan=2, pady=2)
+], state="readonly", font=dropdownFont).grid(row=2, columnspan=2, pady=2)
 # ^ before ".grid", add font if desired
 
 # passwordComplex =
@@ -278,7 +287,7 @@ def runGenerator():
 
 btn1 = ttk.Button(runFrame, text="Run",  command=mainFunction)
 btn1.grid(
-    row=0, columnspan=2)
+    row=0, columnspan=2, pady=3)
 # btn1.bind(mainFunction)
 
 # tkinter.Label(parentFrame).grid(row=11)
