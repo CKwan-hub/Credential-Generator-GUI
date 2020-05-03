@@ -29,9 +29,8 @@ import json
 window = tkinter.Tk()
 window.configure(background='black')
 window.title("CredGen")
-window.geometry('400x255')
+window.geometry('400x230')
 window.resizable(0, 0)
-
 
 # Styling config.
 # style = ttk.Style(window)
@@ -39,8 +38,8 @@ window.resizable(0, 0)
 # style.configure('TFrame', background='red', foreground='blue')
 
 # Parent Frame config.
-parentFrame = tkinter.Frame(width=220, height=255,
-                            borderwidth=2, relief='groove', bg='blue')
+parentFrame = tkinter.Frame(width=220, height=230,
+                            borderwidth=2, relief='groove')
 parentFrame.grid(row=0, column=0, rowspan=2)
 parentFrame.grid_rowconfigure((0, 11), weight=1)
 parentFrame.grid_columnconfigure((0, 1), weight=1)
@@ -50,8 +49,8 @@ window.grid_columnconfigure(0, weight=1)
 dropdownFont = ("tahoma", 8)
 
 # Instructions frame config
-secondFrame = tkinter.Frame(width=180, height=180,
-                            borderwidth=2, relief='groove', bg='red')
+secondFrame = tkinter.Frame(width=180, height=170,
+                            borderwidth=2, relief='groove')
 secondFrame.grid(row=0, column=1)
 secondFrame.grid_propagate(0)
 # secondFrame.grid_rowconfigure((0, 12), weight=1)
@@ -59,7 +58,7 @@ secondFrame.grid_columnconfigure((0, 1), weight=1)
 
 # Run Button Frame.
 runFrame = tkinter.Frame(
-    width=180, height=75, borderwidth=2, relief='groove', bg='yellow')
+    width=180, height=60, borderwidth=2, relief='groove')
 runFrame.grid(row=1, column=1)
 runFrame.grid_propagate(0)
 # runFrame.grid_rowconfigure((0, 2), weight=1)
@@ -71,7 +70,7 @@ password = ''
 lengthOptionsArray = ['short_text.json', 'medium_text.json',
                       'long_text.json', 'longest_text.json', 'million_text.json']
 
-print(lengthOptionsArray[1])
+# print(lengthOptionsArray[1])
 
 # string of ascii letters in both upppercase & lowercase + string of digits  + spec characters
 chars = string.ascii_letters + string.digits + '!?@#$%&*'
@@ -92,15 +91,49 @@ extra_length = [0, 1, 2, 3, 4]
 # url to which the data can be sent.
 # url = '#'
 
+seedFile = tkinter.StringVar()
+seedFile.set('medium_text.json')
+print(seedFile.get())
+
 # list of text to act as the email base value.
-email_text = json.loads(open('short_text.json').read())
+email_text = json.loads(open(seedFile.get()).read())
+
+comboTxt = tkinter.StringVar()
+comboTxt.set('M - 1,750 Results')
+print(comboTxt.get())
+
+lengthOptions = ttk.Combobox(secondFrame, values=[
+    "S - 300 Results",
+    "M - 1,750 Results",
+    "L - 7,500 Results",
+    "XL - 100k Results",
+    "XXL - ~1.1m Results!"
+], state="readonly", font=dropdownFont, textvariable=comboTxt).grid(row=2, columnspan=2, pady=2)
+# ^ before ".grid", add font if desired
+
+print(lengthOptions)
+
+
+def setLength():
+    global lengthOptions
+    global lengthOptionsArray
+    if lengthOptions.get() == "M - 1, 750 Results":
+        # seedFile = lengthOptionsArray[0]
+        print('seedfile:', seedFile)
+        print('lengthOptionarr', lengthOptionsArray[0])
+        print('lengthOptions:', lengthOptions)
+
+
+testBtn = tkinter.Button(runFrame, text='X', command=setLength)
+testBtn.grid(row=1, columnspan=2)
+setLength()
 
 
 def mainFunction():
     global username
     global password
 
-    tkinter.Label(runFrame, text="Generating UserData...").grid(
+    tkinter.Label(runFrame, text="Generating UserData...", fg='red').grid(
         row=1, columnspan=2, pady=2)
     print('running main')
 
@@ -166,22 +199,18 @@ descInfoTxt = tkinter.StringVar()
 descInfoTxt.set(
     'This is test text sample, will it exceed\n the width of the box for the text \n Fill with info for the user')
 descInfo = tkinter.Label(parentFrame, textvariable=descInfoTxt)
-descInfo.grid(row=0, columnspan=2)
+descInfo.grid(row=0, columnspan=2, pady=2)
 
 
 tkinter.Label(secondFrame).grid(row=0, columnspan=2)
 
 tkinter.Label(secondFrame, text="Select Results Length:").grid(
-    row=1, columnspan=2)
+    row=1, columnspan=2, pady=1)
 
-lengthOptions = ttk.Combobox(secondFrame, values=[
-    "Short (300)",
-    "Medium (1,750)",
-    "Long (7,500)",
-    "Very Long (100k)",
-    "Million! (~1.1m)"
-], state="readonly", font=dropdownFont).grid(row=2, columnspan=2, pady=2)
-# ^ before ".grid", add font if desired
+# comboTxt = tkinter.StringVar()
+# comboTxt.set('M - 1,750 Results')
+# print(comboTxt.get())
+
 
 # passwordComplex =
 chkShow = tkinter.IntVar()
@@ -198,38 +227,38 @@ def showWarn():
         passwordText.set("")
 
 
-ttk.Checkbutton(
-    secondFrame, text="Enable Realistic Password", command=showWarn, variable=chkShow, onvalue=1, offvalue=0).grid(row=3, columnspan=2, pady=2)
+tkinter.Checkbutton(
+    secondFrame, text="Realistic Passwords", command=showWarn, variable=chkShow, onvalue=1, offvalue=0).grid(row=3, columnspan=2, pady=1)
 
 chkVal = tkinter.IntVar()
-ttk.Checkbutton(
-    secondFrame, text="Output To File", variable=chkVal, onvalue=1, offvalue=0, command=outputCheck).grid(row=4, columnspan=2, pady=2)
+tkinter.Checkbutton(
+    secondFrame, text="Output To Text File", variable=chkVal, onvalue=1, offvalue=0, command=outputCheck).grid(row=4, columnspan=2, pady=1)
 
 
-tkinter.Label(secondFrame, pady=5).grid(row=5, columnspan=2)
+# tkinter.Label(secondFrame, pady=1).grid(row=5, columnspan=2)
 # Wire up function on length selection.
 # lengthOptions.bind("<<ComboboxSelected>>", lengthSelection)
 
 outputText = tkinter.StringVar()
 tkinter.Label(
-    secondFrame, textvariable=outputText).grid(row=6, columnspan=2)
+    secondFrame, textvariable=outputText, fg='red').grid(row=7, columnspan=2, pady=1)
 outputText.set('')
 
 urlLabel = tkinter.Label(
     parentFrame, text='Target URL', state='disabled')
-urlLabel.grid(row=5)
+urlLabel.grid(row=5, pady=3)
 urlEntry = tkinter.Entry(parentFrame, state='disabled')
-urlEntry.grid(row=5, column=1)
+urlEntry.grid(row=5, column=1, pady=3)
 emailLabel = tkinter.Label(
     parentFrame, text="Email Value", state='disabled')
-emailLabel.grid(row=6)
+emailLabel.grid(row=6, pady=3)
 emailEntry = tkinter.Entry(parentFrame, state='disabled')
-emailEntry.grid(row=6, column=1)
+emailEntry.grid(row=6, column=1, pady=3)
 passwordLabel = tkinter.Label(
     parentFrame, text="Password Value", state='disabled')
-passwordLabel.grid(row=7)
+passwordLabel.grid(row=7, pady=3)
 passwordEntry = tkinter.Entry(parentFrame, state='disabled')
-passwordEntry.grid(row=7, column=1)
+passwordEntry.grid(row=7, column=1, pady=3)
 
 
 def enableEntry():
@@ -238,44 +267,49 @@ def enableEntry():
         print('checked')
         urlLabel = tkinter.Label(
             parentFrame, text='Target URL', state='normal')
-        urlLabel.grid(row=5)
+        urlLabel.grid(row=5, pady=3)
         urlEntry = tkinter.Entry(parentFrame, state='normal')
-        urlEntry.grid(row=5, column=1)
+        urlEntry.grid(row=5, column=1, pady=3)
         emailLabel = tkinter.Label(
             parentFrame, text="Email Value", state='normal')
-        emailLabel.grid(row=6)
+        emailLabel.grid(row=6, pady=3)
         emailEntry = tkinter.Entry(parentFrame, state='normal')
-        emailEntry.grid(row=6, column=1)
+        emailEntry.grid(row=6, column=1, pady=3)
         passwordLabel = tkinter.Label(
             parentFrame, text="Password Value", state='normal')
-        passwordLabel.grid(row=7)
+        passwordLabel.grid(row=7, pady=3)
         passwordEntry = tkinter.Entry(parentFrame, state='normal')
-        passwordEntry.grid(row=7, column=1)
+        passwordEntry.grid(row=7, column=1, pady=3)
     if (chkVal2.get() == 0):
         print('unchecked')
         urlLabel = tkinter.Label(
             parentFrame, text='Target URL', state='disabled')
-        urlLabel.grid(row=5)
+        urlLabel.grid(row=5, pady=3)
         urlEntry = tkinter.Entry(parentFrame, state='disabled')
-        urlEntry.grid(row=5, column=1)
+        urlEntry.grid(row=5, column=1, pady=3)
         emailLabel = tkinter.Label(
             parentFrame, text="Email Value", state='disabled')
-        emailLabel.grid(row=6)
+        emailLabel.grid(row=6, pady=3)
         emailEntry = tkinter.Entry(parentFrame, state='disabled')
-        emailEntry.grid(row=6, column=1)
+        emailEntry.grid(row=6, column=1, pady=3)
         passwordLabel = tkinter.Label(
             parentFrame, text="Password Value", state='disabled')
-        passwordLabel.grid(row=7)
+        passwordLabel.grid(row=7, pady=3)
         passwordEntry = tkinter.Entry(parentFrame, state='disabled')
-        passwordEntry.grid(row=7, column=1)
+        passwordEntry.grid(row=7, column=1, pady=3)
+
+
+tkinter.ttk.Separator(parentFrame, orient="horizontal").grid(
+    row=3, sticky='ew', columnspan=2)
 
 
 chkVal2 = tkinter.IntVar()
-ttk.Checkbutton(
-    parentFrame, text="Send to URL", command=enableEntry, variable=chkVal2, onvalue=1, offvalue=0).grid(row=4, columnspan=2)
+tkinter.Checkbutton(
+    parentFrame, text="Send to URL", command=enableEntry, variable=chkVal2, onvalue=1, offvalue=0, pady=5).grid(row=4, columnspan=2)
 
 
-tkinter.Label(parentFrame, textvariable=passwordText).grid(row=9, columnspan=2)
+tkinter.Label(secondFrame, textvariable=passwordText, fg='red').grid(
+    row=6, columnspan=2, pady=1)
 
 
 def runGenerator():
@@ -285,7 +319,7 @@ def runGenerator():
     print('running main')
 
 
-btn1 = ttk.Button(runFrame, text="Run",  command=mainFunction)
+btn1 = tkinter.Button(runFrame, text="Generate",  command=mainFunction)
 btn1.grid(
     row=0, columnspan=2, pady=3)
 # btn1.bind(mainFunction)
