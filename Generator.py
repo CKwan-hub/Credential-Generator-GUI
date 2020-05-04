@@ -5,16 +5,13 @@
 # If URLchk = checked,
 # get values from fields, pass as values for vars in main function.
 #
-#  Output Length
-# switch statement (aka dictionary map) for the json files
-# make the .json file being read as seed a variable
-# if (combobox value) = X, email_text = X
-# (also, set a default setting)
-#
 # Strong vs Realistic password generation
 # In main repo, create a function with random selection
 # if hits "strong" vs the normal selection route,
 # do random.choice(word from seed), plus 1-4 num/symbol
+#
+#
+#
 
 # Importing
 import tkinter
@@ -91,47 +88,65 @@ extra_length = [0, 1, 2, 3, 4]
 # url to which the data can be sent.
 # url = '#'
 
-seedFile = tkinter.StringVar()
-seedFile.set('medium_text.json')
-print(seedFile.get())
-
-# list of text to act as the email base value.
-email_text = json.loads(open(seedFile.get()).read())
 
 comboTxt = tkinter.StringVar()
-comboTxt.set('M - 1,750 Results')
-print(comboTxt.get())
+comboTxt.set('M')
+print('comboTxt', comboTxt.get())
 
 lengthOptions = ttk.Combobox(secondFrame, values=[
-    "S - 300 Results",
-    "M - 1,750 Results",
-    "L - 7,500 Results",
-    "XL - 100k Results",
-    "XXL - ~1.1m Results!"
+    "S",
+    "M",
+    "L",
+    "XL",
+    "MILLION"
 ], state="readonly", font=dropdownFont, textvariable=comboTxt).grid(row=2, columnspan=2, pady=2)
 # ^ before ".grid", add font if desired
 
-print(lengthOptions)
+# print(lengthOptions)
 
 
-def setLength():
-    global lengthOptions
-    global lengthOptionsArray
-    if lengthOptions.get() == "M - 1, 750 Results":
-        # seedFile = lengthOptionsArray[0]
-        print('seedfile:', seedFile)
-        print('lengthOptionarr', lengthOptionsArray[0])
-        print('lengthOptions:', lengthOptions)
-
-
-testBtn = tkinter.Button(runFrame, text='X', command=setLength)
-testBtn.grid(row=1, columnspan=2)
-setLength()
+# testBtn = tkinter.Button(runFrame, text='X', command=setLength)
+# testBtn.grid(row=1, columnspan=2)
+# setLength()
 
 
 def mainFunction():
     global username
     global password
+
+    seedFile = tkinter.StringVar()
+    seedFile.set('medium_text.json')
+    print('seedFile', seedFile.get())
+
+    def setLength():
+        print('pressed')
+        print('comboTxt', comboTxt.get())
+        print('seedfile:', seedFile.get())
+        if (comboTxt.get() == 'S'):
+            print('matchedS')
+            seedFile.set('short_text.json')
+            print(seedFile.get())
+        if (comboTxt.get() == 'M'):
+            print('matchedM')
+            seedFile.set('medium_text.json')
+            print(seedFile.get())
+        if (comboTxt.get() == 'L'):
+            print('matchedL')
+            seedFile.set('long_text.json')
+            print(seedFile.get())
+        if (comboTxt.get() == 'XL'):
+            print('matchedXL')
+            seedFile.set('longest_text.json')
+            print(seedFile.get())
+        if (comboTxt.get() == 'MILLION'):
+            print('matchedMil')
+            seedFile.set('million_text.json')
+            print(seedFile.get())
+
+    setLength()
+
+    # list of text to act as the email base value.
+    email_text = json.loads(open(seedFile.get()).read())
 
     tkinter.Label(runFrame, text="Generating UserData...", fg='red').grid(
         row=1, columnspan=2, pady=2)
