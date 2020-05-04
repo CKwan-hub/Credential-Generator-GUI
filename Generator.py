@@ -1,10 +1,7 @@
 
 
 # TODO:
-# URL WORK
-# If URLchk = checked,
-# get values from fields, pass as values for vars in main function.
-#
+
 # Strong vs Realistic password generation
 # In main repo, create a function with random selection
 # if hits "strong" vs the normal selection route,
@@ -61,6 +58,7 @@ runFrame.grid_propagate(0)
 # runFrame.grid_rowconfigure((0, 2), weight=1)
 runFrame.grid_columnconfigure((0, 1), weight=1)
 
+url = ''
 username = ''
 password = ''
 
@@ -85,8 +83,12 @@ password_length = [6, 7, 8, 9, 10, 11, 12]
 # choices for generated extra email numbers length.
 extra_length = [0, 1, 2, 3, 4]
 
-# url to which the data can be sent.
-# url = '#'
+urlValue = tkinter.StringVar()
+urlValue.set('')
+userValue = tkinter.StringVar()
+userValue.set('')
+passValue = tkinter.StringVar()
+passValue.set('')
 
 
 comboTxt = tkinter.StringVar()
@@ -111,8 +113,9 @@ lengthOptions = ttk.Combobox(secondFrame, values=[
 
 
 def mainFunction():
-    global username
-    global password
+    global urlValue
+    global userValue
+    global passValue
 
     seedFile = tkinter.StringVar()
     seedFile.set('medium_text.json')
@@ -172,6 +175,17 @@ def mainFunction():
         password = ''.join(random.choice(chars)
                            for i in range(random.choice(password_length)))
 
+        def sendURL():
+            if (chkVal2.get() == 1):
+                print('url', urlValue.get())
+                print('userValue', userValue.get())
+                print('passValue', passValue.get())
+                requests.post((urlValue.get()), allow_redirects=False, data={
+                    userValue.get(): username,
+                    passValue.get(): password
+                })
+
+        sendURL()
         # Post to the specified url, don't redirect and pass usernames and passwords.
         # !!Need to specify the var for username and password from submission form.
         # requests.post(url, allow_redirects=False, data={
@@ -262,55 +276,66 @@ outputText.set('')
 urlLabel = tkinter.Label(
     parentFrame, text='Target URL', state='disabled')
 urlLabel.grid(row=5, pady=3)
-urlEntry = tkinter.Entry(parentFrame, state='disabled')
+urlEntry = tkinter.Entry(parentFrame, textvariable=urlValue, state='disabled')
 urlEntry.grid(row=5, column=1, pady=3)
 emailLabel = tkinter.Label(
     parentFrame, text="Email Value", state='disabled')
 emailLabel.grid(row=6, pady=3)
-emailEntry = tkinter.Entry(parentFrame, state='disabled')
+emailEntry = tkinter.Entry(
+    parentFrame, textvariable=userValue, state='disabled')
 emailEntry.grid(row=6, column=1, pady=3)
 passwordLabel = tkinter.Label(
     parentFrame, text="Password Value", state='disabled')
 passwordLabel.grid(row=7, pady=3)
-passwordEntry = tkinter.Entry(parentFrame, state='disabled')
+passwordEntry = tkinter.Entry(
+    parentFrame, textvariable=passValue, state='disabled')
 passwordEntry.grid(row=7, column=1, pady=3)
 
 
 def enableEntry():
-    global urlLabel, urlEntry, emailLabel, emailEntry, passwordLabel, passwordEntry
+    global urlLabel, urlEntry, emailLabel, emailEntry, passwordLabel, passwordEntry, urlValue, userValue, passValue
     if (chkVal2.get() == 1):
         print('checked')
         urlLabel = tkinter.Label(
             parentFrame, text='Target URL', state='normal')
         urlLabel.grid(row=5, pady=3)
-        urlEntry = tkinter.Entry(parentFrame, state='normal')
+        urlEntry = tkinter.Entry(
+            parentFrame, textvariable=urlValue, state='normal')
         urlEntry.grid(row=5, column=1, pady=3)
         emailLabel = tkinter.Label(
             parentFrame, text="Email Value", state='normal')
         emailLabel.grid(row=6, pady=3)
-        emailEntry = tkinter.Entry(parentFrame, state='normal')
+        emailEntry = tkinter.Entry(
+            parentFrame, textvariable=userValue, state='normal')
         emailEntry.grid(row=6, column=1, pady=3)
         passwordLabel = tkinter.Label(
             parentFrame, text="Password Value", state='normal')
         passwordLabel.grid(row=7, pady=3)
-        passwordEntry = tkinter.Entry(parentFrame, state='normal')
+        passwordEntry = tkinter.Entry(
+            parentFrame, textvariable=passValue, state='normal')
         passwordEntry.grid(row=7, column=1, pady=3)
     if (chkVal2.get() == 0):
         print('unchecked')
+        print(urlValue.get())
+        print(userValue.get())
+        print(passValue.get())
         urlLabel = tkinter.Label(
             parentFrame, text='Target URL', state='disabled')
         urlLabel.grid(row=5, pady=3)
-        urlEntry = tkinter.Entry(parentFrame, state='disabled')
+        urlEntry = tkinter.Entry(
+            parentFrame, textvariable=urlValue, state='disabled')
         urlEntry.grid(row=5, column=1, pady=3)
         emailLabel = tkinter.Label(
             parentFrame, text="Email Value", state='disabled')
         emailLabel.grid(row=6, pady=3)
-        emailEntry = tkinter.Entry(parentFrame, state='disabled')
+        emailEntry = tkinter.Entry(
+            parentFrame, textvariable=userValue, state='disabled')
         emailEntry.grid(row=6, column=1, pady=3)
         passwordLabel = tkinter.Label(
             parentFrame, text="Password Value", state='disabled')
         passwordLabel.grid(row=7, pady=3)
-        passwordEntry = tkinter.Entry(parentFrame, state='disabled')
+        passwordEntry = tkinter.Entry(
+            parentFrame, textvariable=passValue, state='disabled')
         passwordEntry.grid(row=7, column=1, pady=3)
 
 
