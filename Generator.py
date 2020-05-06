@@ -113,9 +113,7 @@ def mainFunction():
     seedFile = tkinter.StringVar()
     seedFile.set('medium_text.json')
 
-
-f
-   def setLength():
+    def setLength():
         if (comboTxt.get() == 'S'):
             seedFile.set('short_text.json')
         if (comboTxt.get() == 'M'):
@@ -182,7 +180,7 @@ def outputCheck():
 
 descInfoTxt = tkinter.StringVar()
 descInfoTxt.set(
-    'This is test text sample, will it exceed\n the width of the box for the text \n Fill with info for the user')
+    'Select Output Preference\n Choose Desired Output Length \n Select Realistic/Strong Password \n Run Generator')
 descInfo = tkinter.Label(parentFrame, textvariable=descInfoTxt)
 descInfo.grid(row=0, columnspan=2, pady=2)
 
