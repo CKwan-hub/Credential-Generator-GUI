@@ -15,7 +15,7 @@
 #
 #
 
-# Importing
+# Importing.
 import tkinter
 from tkinter import ttk
 import requests
@@ -104,8 +104,18 @@ lengthOptions = ttk.Combobox(secondFrame, values=[
     "MILLION"
 ], state="readonly", font=dropdownFont, textvariable=comboTxt).grid(row=2, columnspan=2, pady=2)
 
+passCmbTxt = tkinter.StringVar()
+passCmbTxt.set('Randomized')
+
+passOptions = ttk.Combobox(secondFrame, values=[
+    "Realistic",
+    "Strong",
+    "Ramdomized"
+], state="readonly", font=dropdownFont, textvariable=passCmbTxt).grid(row=4, columnspan=2, pady=1)
+
 
 def mainFunction():
+
     global urlValue
     global userValue
     global passValue
@@ -134,7 +144,6 @@ def mainFunction():
         row=1, columnspan=2, pady=2)
 
     for email_data in email_text:
-
         # additional values for randomly adding a second word to email.
         name_random = ["", random.choice(email_text), ""]
 
@@ -142,13 +151,41 @@ def mainFunction():
         name_digits = ''.join(random.choice(string.digits)
                               for i in range(random.choice(extra_length)))
 
+        # choices for generated password additions
+        pass_length = [1, 2, 3]
+
+        pass_digits = ''.join(random.choice(chars)
+                              for i in range(random.choice(pass_length)))
+
+        # Strong password choice.
+        strongPass = ''.join(random.choice(chars)
+                             for i in range(random.choice(password_length)))
+
+        # Realistic password generation.
+        realPass = ''.join(random.choice(email_text) +
+                           random.choice(name_random) + pass_digits)
+
+        # Realistic password chance.
+        passSelect = [strongPass, realPass, realPass]
+
         # lowercase values from email_text + random digits + random choice of email suffix.
         username = email_data.lower() + random.choice(name_random) + \
             name_digits + random.choice(email_list)
 
+        passwordVal = tkinter.StringVar()
+        passwordVal.set(random.choice(passSelect))
         # random selection of upper & lower case characters/digits/special characters at a length of 6-12.
-        password = ''.join(random.choice(chars)
-                           for i in range(random.choice(password_length)))
+
+        def passStyle():
+            if (passCmbTxt.get() == 'Randomized'):
+                passwordVal.set(random.choice(passSelect))
+            if (passCmbTxt.get() == 'Realistic'):
+                passwordVal.set(realPass)
+            if (passCmbTxt.get() == 'Strong'):
+                passwordVal.set(strongPass)
+
+        passStyle()
+        password = passwordVal.get()
 
         def sendURL():
             if (chkVal2.get() == 1):
@@ -180,41 +217,43 @@ def outputCheck():
 
 descInfoTxt = tkinter.StringVar()
 descInfoTxt.set(
-    'Select Output Preference\n Choose Desired Output Length \n Select Realistic/Strong Password \n Run Generator')
+    'Select Output Preference\n Choose Desired Output Length \n Select Password Style \n Run Generator')
 descInfo = tkinter.Label(parentFrame, textvariable=descInfoTxt)
 descInfo.grid(row=0, columnspan=2, pady=2)
 
 
-tkinter.Label(secondFrame).grid(row=0, columnspan=2)
+# tkinter.Label(secondFrame).grid(row=0, columnspan=2)
 
 tkinter.Label(secondFrame, text="Select Results Length:").grid(
-    row=1, columnspan=2, pady=1)
+    row=1, columnspan=2, pady=(11, 1))
 
 
 # passwordComplex =
-chkShow = tkinter.IntVar()
-passwordText = tkinter.StringVar()
-passwordText.set("")
+# chkShow = tkinter.IntVar()
+# passwordText = tkinter.StringVar()
+# passwordText.set("")
 
 
-def showWarn():
-    if (chkShow.get() == 1):
-        passwordText.set("Generating realistic passwords.")
-    if (chkShow.get() == 0):
-        passwordText.set("")
+# def showWarn():
+#     if (chkShow.get() == 1):
+#         passwordText.set("Generating realistic passwords.")
+#     if (chkShow.get() == 0):
+#         passwordText.set("")
 
 
-tkinter.Checkbutton(
-    secondFrame, text="Realistic Passwords", command=showWarn, variable=chkShow, onvalue=1, offvalue=0).grid(row=3, columnspan=2, pady=1)
+tkinter.Label(secondFrame, text="Select Password Types:").grid(
+    row=3, columnspan=2, pady=1)
+# tkinter.Checkbutton(
+#     secondFrame, text="Realistic Passwords", command=showWarn, variable=chkShow, onvalue=1, offvalue=0).grid(row=3, columnspan=2, pady=1)
 
 chkVal = tkinter.IntVar()
 tkinter.Checkbutton(
-    secondFrame, text="Output To Text File", variable=chkVal, onvalue=1, offvalue=0, command=outputCheck).grid(row=4, columnspan=2, pady=1)
+    secondFrame, text="Output To Text File", variable=chkVal, onvalue=1, offvalue=0, command=outputCheck).grid(row=5, columnspan=2, pady=1)
 
 
 outputText = tkinter.StringVar()
 tkinter.Label(
-    secondFrame, textvariable=outputText, fg='red').grid(row=7, columnspan=2, pady=1)
+    secondFrame, textvariable=outputText, fg='red').grid(row=6, columnspan=2, pady=1)
 outputText.set('')
 
 urlLabel = tkinter.Label(
@@ -286,9 +325,9 @@ chkVal2 = tkinter.IntVar()
 tkinter.Checkbutton(
     parentFrame, text="Send to URL", command=enableEntry, variable=chkVal2, onvalue=1, offvalue=0, pady=5).grid(row=4, columnspan=2)
 
-
-tkinter.Label(secondFrame, textvariable=passwordText, fg='red').grid(
-    row=6, columnspan=2, pady=1)
+#
+# tkinter.Label(secondFrame, textvariable=passwordText, fg='red').grid(
+#     row=6, columnspan=2, pady=1)
 
 
 btn1 = tkinter.Button(runFrame, text="Generate",  command=mainFunction)
