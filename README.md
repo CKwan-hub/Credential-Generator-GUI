@@ -1,7 +1,7 @@
 # Credential-Generator-GUI
 tkinter GUI for Python Credential Generator.
 
-## ** Warning! Using "Million_text.json" output length with "Randomized" or "Realistic" password generation can significantly increase processing time and resource demand **
+## **Warning!** Using "Million_text.json" output length with "Randomized" or "Realistic" password generation can significantly increase processing time and resource demand
 
 ## Seed File Info:
 Seed files for credential generation use filtered lists with numbers, punctuation, characters and words containing three or less letters removed. 
