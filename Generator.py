@@ -23,7 +23,7 @@ import json
 # Window config.
 window = tkinter.Tk()
 window.configure(background='black')
-window.title("CredGen")
+window.title('CredGen')
 window.geometry('400x230')
 window.resizable(0, 0)
 
@@ -41,7 +41,7 @@ parentFrame.grid_columnconfigure((0, 1), weight=1)
 parentFrame.grid_propagate(0)
 window.grid_rowconfigure(0, weight=1)
 window.grid_columnconfigure(0, weight=1)
-dropdownFont = ("tahoma", 8)
+dropdownFont = ('tahoma', 8)
 
 # Instructions frame config
 secondFrame = tkinter.Frame(width=180, height=170,
@@ -97,12 +97,12 @@ comboTxt.set('M')
 
 # Combobox object for output length/seedfile selection.
 lengthOptions = ttk.Combobox(secondFrame, values=[
-    "S",
-    "M",
-    "L",
-    "XL",
-    "MILLION"
-], state="readonly", font=dropdownFont, textvariable=comboTxt).grid(row=2, columnspan=2, pady=2)
+    'S',
+    'M',
+    'L',
+    'XL',
+    'MILLION'
+], state='readonly', font=dropdownFont, textvariable=comboTxt).grid(row=2, columnspan=2, pady=2)
 
 # Setting Password ComboBox Default.
 passCmbTxt = tkinter.StringVar()
@@ -110,10 +110,10 @@ passCmbTxt.set('Randomized')
 
 # Combobox object for password type selection.
 passOptions = ttk.Combobox(secondFrame, values=[
-    "Realistic",
-    "Strong",
-    "Ramdomized"
-], state="readonly", font=dropdownFont, textvariable=passCmbTxt).grid(row=4, columnspan=2, pady=1)
+    'Realistic',
+    'Strong',
+    'Ramdomized'
+], state='readonly', font=dropdownFont, textvariable=passCmbTxt).grid(row=4, columnspan=2, pady=1)
 
 # Main function for generation.
 
@@ -147,12 +147,12 @@ def mainFunction():
     email_text = json.loads(open(seedFile.get()).read())
 
     # User message for completion.
-    tkinter.Label(runFrame, text="Data Generated!", fg='red').grid(
+    tkinter.Label(runFrame, text='Data Generated!', fg='red').grid(
         row=1, columnspan=2, pady=2)
 
     for email_data in email_text:
         # additional values for randomly adding a second word to email.
-        name_random = ["", random.choice(email_text), ""]
+        name_random = ['', random.choice(email_text), '']
 
         # take a random amount of digits, at a random length between 0 and 4.
         name_digits = ''.join(random.choice(string.digits)
@@ -210,7 +210,7 @@ def mainFunction():
 
         # Output list of usernames and passwords to external if checked, if not, print values.
         if (chkVal.get() == 1):
-            output_file.write('\"Username:\" \'% s\' \"Password:\" \'% s\' \n' %
+            output_file.write('\'Username:\' \'% s\' \'Password:\' \'% s\' \n' %
                               (username, password))
         if (chkVal.get() == 0):
             print('Username: %s Password: %s' % (username, password))
@@ -228,11 +228,11 @@ descInfo = tkinter.Label(parentFrame, textvariable=descInfoTxt)
 descInfo.grid(row=0, columnspan=2, pady=2)
 
 # Info for Length Combobox.
-tkinter.Label(secondFrame, text="Select Results Length:").grid(
+tkinter.Label(secondFrame, text='Select Results Length:').grid(
     row=1, columnspan=2, pady=(11, 1))
 
 # Info for Password style Combobox.
-tkinter.Label(secondFrame, text="Select Password Types:").grid(
+tkinter.Label(secondFrame, text='Select Password Types:').grid(
     row=3, columnspan=2, pady=1)
 
 # Toggle message showing where output can be found.
@@ -240,7 +240,7 @@ tkinter.Label(secondFrame, text="Select Password Types:").grid(
 
 def outputCheck():
     if (chkVal.get() == 1):
-        outputText.set('Data Generated In \"Output.txt\"')
+        outputText.set('Data Generated In \'Output.txt\'')
     if (chkVal.get() == 0):
         outputText.set('')
 
@@ -248,7 +248,7 @@ def outputCheck():
 # Checkbutton for external output.
 chkVal = tkinter.IntVar()
 tkinter.Checkbutton(
-    secondFrame, text="Output To Text File", variable=chkVal, onvalue=1, offvalue=0, command=outputCheck).grid(row=5, columnspan=2, pady=1)
+    secondFrame, text='Output To Text File', variable=chkVal, onvalue=1, offvalue=0, command=outputCheck).grid(row=5, columnspan=2, pady=1)
 
 # Info message for external output.
 outputText = tkinter.StringVar()
@@ -263,13 +263,13 @@ urlLabel.grid(row=5, pady=3)
 urlEntry = tkinter.Entry(parentFrame, textvariable=urlValue, state='disabled')
 urlEntry.grid(row=5, column=1, pady=3)
 emailLabel = tkinter.Label(
-    parentFrame, text="Email Value", state='disabled')
+    parentFrame, text='Email Value', state='disabled')
 emailLabel.grid(row=6, pady=3)
 emailEntry = tkinter.Entry(
     parentFrame, textvariable=userValue, state='disabled')
 emailEntry.grid(row=6, column=1, pady=3)
 passwordLabel = tkinter.Label(
-    parentFrame, text="Password Value", state='disabled')
+    parentFrame, text='Password Value', state='disabled')
 passwordLabel.grid(row=7, pady=3)
 passwordEntry = tkinter.Entry(
     parentFrame, textvariable=passValue, state='disabled')
@@ -288,13 +288,13 @@ def enableEntry():
             parentFrame, textvariable=urlValue, state='normal')
         urlEntry.grid(row=5, column=1, pady=3)
         emailLabel = tkinter.Label(
-            parentFrame, text="Email Value", state='normal')
+            parentFrame, text='Email Value', state='normal')
         emailLabel.grid(row=6, pady=3)
         emailEntry = tkinter.Entry(
             parentFrame, textvariable=userValue, state='normal')
         emailEntry.grid(row=6, column=1, pady=3)
         passwordLabel = tkinter.Label(
-            parentFrame, text="Password Value", state='normal')
+            parentFrame, text='Password Value', state='normal')
         passwordLabel.grid(row=7, pady=3)
         passwordEntry = tkinter.Entry(
             parentFrame, textvariable=passValue, state='normal')
@@ -307,13 +307,13 @@ def enableEntry():
             parentFrame, textvariable=urlValue, state='disabled')
         urlEntry.grid(row=5, column=1, pady=3)
         emailLabel = tkinter.Label(
-            parentFrame, text="Email Value", state='disabled')
+            parentFrame, text='Email Value', state='disabled')
         emailLabel.grid(row=6, pady=3)
         emailEntry = tkinter.Entry(
             parentFrame, textvariable=userValue, state='disabled')
         emailEntry.grid(row=6, column=1, pady=3)
         passwordLabel = tkinter.Label(
-            parentFrame, text="Password Value", state='disabled')
+            parentFrame, text='Password Value', state='disabled')
         passwordLabel.grid(row=7, pady=3)
         passwordEntry = tkinter.Entry(
             parentFrame, textvariable=passValue, state='disabled')
@@ -321,16 +321,16 @@ def enableEntry():
 
 
 # Formatting.
-tkinter.ttk.Separator(parentFrame, orient="horizontal").grid(
+tkinter.ttk.Separator(parentFrame, orient='horizontal').grid(
     row=3, sticky='ew', columnspan=2)
 
 # Checkbutton allowing editing of URL/Email/Password fields.
 chkVal2 = tkinter.IntVar()
 tkinter.Checkbutton(
-    parentFrame, text="Send to URL", command=enableEntry, variable=chkVal2, onvalue=1, offvalue=0, pady=5).grid(row=4, columnspan=2)
+    parentFrame, text='Send to URL', command=enableEntry, variable=chkVal2, onvalue=1, offvalue=0, pady=5).grid(row=4, columnspan=2)
 
 # Generation Button/
-btn1 = tkinter.Button(runFrame, text="Generate",  command=mainFunction)
+btn1 = tkinter.Button(runFrame, text='Generate',  command=mainFunction)
 btn1.grid(
     row=0, columnspan=2, pady=3)
 
