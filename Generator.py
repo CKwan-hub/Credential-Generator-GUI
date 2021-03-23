@@ -112,7 +112,7 @@ passCmbTxt.set('Randomized')
 passOptions = ttk.Combobox(secondFrame, values=[
     'Realistic',
     'Strong',
-    'Ramdomized'
+    'Randomized'
 ], state='readonly', font=dropdownFont, textvariable=passCmbTxt).grid(row=4, columnspan=2, pady=1)
 
 # Main function for generation.
